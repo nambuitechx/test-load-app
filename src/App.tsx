@@ -36,7 +36,8 @@ function App() {
   const [headers, setHeaders] = useState<IObj[]>([])
   const [bodies, setBodies] = useState<IObj[]>([])
   // const [results, setResults] = useState<any[]>([])
-  const [resultString, setResultString] = useState<string>("Not vailable")
+  const [elapsedString, setElapsedString] = useState<string>("Not vailable")
+  const [statusString, setStatusString] = useState<string>("Not vailable")
 
   // Headers
   const addHeader = () => {
@@ -165,12 +166,35 @@ function App() {
         elapsed.push(responses[i][1])
       }
 
+      // Elapsed
       const min = Math.min(...elapsed).toFixed(2)
       const max = Math.max(...elapsed).toFixed(2)
       const sum = elapsed.reduce((a, b) => a + b, 0)
       const ave = (sum / elapsed.length).toFixed(2)
 
-      setResultString(`Min: ${min}ms - Max: ${max}ms - Average: ${ave}ms`)
+      setElapsedString(`Min: ${min}ms - Max: ${max}ms - Average: ${ave}ms`)
+
+      // Status
+      const m: Record<number, number> = {}
+      const key: number[] = []
+
+      for (let i = 0 ; i < status.length; i++) {
+        if (!m[status[i]]) {
+          m[status[i]] = 1
+          key.push(status[i])
+        } else {
+          m[status[i]] += 1
+        }
+      }
+
+      let str = ""
+
+      for (let i = 0; i < key.length; i++) {
+        str += `Status code ${key[i]}: ${m[key[i]]} times - `
+      }
+
+      setStatusString(str)
+
       setLoading(false)
     }
   }
@@ -235,7 +259,8 @@ function App() {
       </div>
       <div className='right'>
           <p>Results</p>
-          <p>{loading || resultString}</p>
+          <p>{loading ? 'loading...' : elapsedString}</p>
+          <p>{loading ? 'loading...' : statusString}</p>
           {/* {results.length > 0 && results.map((result: any, index: number) => (
             <div key={String(index)}>
               <Result
