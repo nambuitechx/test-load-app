@@ -1,6 +1,6 @@
 function Header({ id, key, value, handleUpdateKey, handleUpdateValue } : { id: any, key: any, value: any, handleUpdateKey: any, handleUpdateValue: any }) {
   return (
-    <div>
+    <div className="header">
       <p>
         <span>Key: </span>
         <input value={key} onChange={(e) => handleUpdateKey({ id, newKey: e.target.value })} />
