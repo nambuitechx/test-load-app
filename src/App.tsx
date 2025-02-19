@@ -85,7 +85,7 @@ function App() {
         return { id: body.id, key: newKey, value: body.value }
       }
     });
-    setHeaders(newBodies)
+    setBodies(newBodies)
   }
 
   const updateBodyValue = ({ id, newValue } : IUpdateValue) => {
@@ -96,7 +96,7 @@ function App() {
         return { id: body.id, key: body.key, value: newValue }
       }
     });
-    setHeaders(newBodies)
+    setBodies(newBodies)
   }
 
   const populateRequest = async (url: any, method: any, headers: any, body: any) => {
@@ -227,12 +227,12 @@ function App() {
 
         <div className='headers'>
           <p><button onClick={() => addHeader()}>Add header</button></p>
-          {headers.length > 0 && headers.map((header: IObj, index: number) => (
-            <div key={String(index)}>
+          {headers.length > 0 && headers.map((header: IObj) => (
+            <div key={String(header.id)}>
               <Header
                 id={header.id}
-                key={header.key}
-                value={header.value}
+                k={header.key}
+                v={header.value}
                 handleUpdateKey={updateHeaderKey}
                 handleUpdateValue={updateHeaderValue}
               />
@@ -243,12 +243,12 @@ function App() {
 
         <div className='bodies'>
           <p><button onClick={() => addBody()}>Add body</button></p>
-          {bodies.length > 0 && bodies.map((body: IObj, index: number) => (
-            <div key={String(index)}>
+          {bodies.length > 0 && bodies.map((body: IObj) => (
+            <div key={String(body.id)}>
               <Body
                 id={body.id}
-                key={body.key}
-                value={body.value}
+                k={body.key}
+                v={body.value}
                 handleUpdateKey={updateBodyKey}
                 handleUpdateValue={updateBodyValue}
               />
